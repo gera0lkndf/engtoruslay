@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Перекладка</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#f6f1f1" />
+  <link rel="icon" href="icon.png" />
+  <style>
+    body {
+      background-color: #f6f1f1;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2em;
+      color: #333;
+    }
+
+    h1 {
+      color: #6c5b7b;
+      margin-bottom: 0.5em;
+    }
+
+    textarea {
+      width: 90%;
+      max-width: 600px;
+      height: 150px;
+      padding: 1em;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 1em;
+      resize: vertical;
+    }
+
+    button {
+      background-color: #c06c84;
+      color: white;
+      border: none;
+      padding: 0.7em 1.5em;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #b05270;
+    }
+
+    .output {
+      margin-top: 1.5em;
+      font-size: 1.2em;
+      background: #fff;
+      padding: 1em;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 90%;
+      word-wrap: break-word;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Перекладка</h1>
+  <textarea id="input" placeholder="Ghbdtn"></textarea>
+  <button onclick="convertLayout()">Перевести</button>
+  <div class="output" id="output"></div>
+
+  <script>
+    const layoutMap = {
+      'q':'й','w':'ц','e':'у','r':'к','t':'е','y':'н','u':'г','i':'ш','o':'щ','p':'з','[':'х',']':'ъ',
+      'a':'ф','s':'ы','d':'в','f':'а','g':'п','h':'р','j':'о','k':'л','l':'д',';':'ж','\'':'э',
+      'z':'я','x':'ч','c':'с','v':'м','b':'и','n':'т','m':'ь',',':'б','.':'ю','/':'.',
+      'Q':'Й','W':'Ц','E':'У','R':'К','T':'Е','Y':'Н','U':'Г','I':'Ш','O':'Щ','P':'З','{':'Х','}':'Ъ',
+      'A':'Ф','S':'Ы','D':'В','F':'А','G':'П','H':'Р','J':'О','K':'Л','L':'Д',':':'Ж','"':'Э',
+      'Z':'Я','X':'Ч','C':'С','V':'М','B':'И','N':'Т','M':'Ь','<':'Б','>':'Ю','?':','
+    };
+
+    function convertLayout() {
+      const inputText = document.getElementById('input').value;
+      let result = '';
+      for (let char of inputText) {
+        result += layoutMap[char] || char;
+      }
+      document.getElementById('output').innerText = result;
+    }
+
+    // Регистрация service worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
